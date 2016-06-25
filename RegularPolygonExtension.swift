@@ -20,19 +20,23 @@ extension UIBezierPath {
      
      - returns: the N-sided polygon
      */
-    convenience init (createRegularShape rect: CGRect, withSides sides: UInt = 3, withRotation rotation: CGFloat? = nil) {
+    convenience init (createRegularShape rect: CGRect, withSides sides: UInt = 3, withRotation rotation: CGFloat? = nil, customLineWidth width: CGFloat = 1.0) {
         self.init()
         //Checks to see if withSides meets the preconditions
         assert(sides > 2, "withSides parameter must be greater than 3")
+        self.lineWidth = width
+        
+        let xRad = rect.width/2 - self.lineWidth/2
+        let yRad = rect.height/2 - self.lineWidth/2
         
         //Moves the point to initial point to draw
-        self.moveToPoint(CGPointMake(rect.width/2 + rect.midX, rect.midY))
+        self.moveToPoint(CGPointMake(xRad + rect.midX, rect.midY))
         
         //Creates end point the shape and draws it to there
         for i in 0..<sides {
             let theta = CGFloat(2 * M_PI / Double(sides) * Double(i))
-            let x = rect.midX + rect.width/2 * cos(theta)
-            let y = rect.midY + rect.height/2 * sin(theta)
+            let x = rect.midX + xRad * cos(theta)
+            let y = rect.midY + yRad * sin(theta)
             self.addLineToPoint(CGPointMake(x, y))
         }
         
@@ -52,8 +56,8 @@ extension UIBezierPath {
         //The transform settings
         if let rad = rotation {
             let rotate = CGAffineTransformMakeRotation(rad)
-            let offset = CGAffineTransformMakeTranslation(-rect.width / 2, -rect.height/2)
-            let center = CGAffineTransformMakeTranslation(rect.width/2, rect.height/2)
+            let offset = CGAffineTransformMakeTranslation(-rect.width / 2 , -rect.height/2 )
+            let center = CGAffineTransformMakeTranslation(rect.width/2 , rect.height/2)
         
             //First need to offset the polygon to (0,0)
             self.applyTransform(offset)
