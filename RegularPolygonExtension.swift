@@ -15,9 +15,9 @@ extension UIBezierPath {
      - precondition: withSides > 2 and `UIBezierPath.lineWidth` is pre-defined
      
      - parameter createPolygonInRect: the frame to draw the polygon
-     - parameter withSides:                  the amound of sides of the polygon. Must be greater than 2.
-     - parameter withRotation:               the degrees in radians to rotate the polygon
-     - parameter withLineWidth:            the width of the `UIBezierPath.lineWidth` to adjust of drawn edges
+     - parameter withSides:           the amound of sides of the polygon. Must be greater than 2.
+     - parameter withRotation:        the degrees in radians to rotate the polygon
+     - parameter withLineWidth:       the width of the `UIBezierPath.lineWidth` to adjust of drawn edges
      
      - returns: the N-sided polygon
      */
@@ -51,10 +51,10 @@ extension UIBezierPath {
     /**
      Helper function to rotate the N-sided polygon. Used `applyTransform` and `CGAffineTransform`
      
-     - parameter inRect:     the rect to rotate the polygon
+     - parameter inRect:       the rect to rotate the polygon
      - parameter withRotation: the degrees in radians to rotate the polygon
      */
-    private func transformPolygon(inRect rect: CGRect, withRotation rotation: CGFloat?){
+    private func transformPolygon(inRect rect: CGRect, withRotation rotation: CGFloat?) {
         //The transform settings
         if let rad = rotation {
             //Calculate the transforms
