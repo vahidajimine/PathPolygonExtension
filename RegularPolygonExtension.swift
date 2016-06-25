@@ -1,3 +1,13 @@
+//
+//  RegularPolygonExtension.swift
+//
+//  Created by Vahid Ajimine on 6/24/16.
+//  Copyright © 2016 Vahid Ajimine. All rights reserved.
+//
+
+import Foundation
+import UIKit
+
 extension UIBezierPath {
     /**
      Creates an N-sided regular polygon within a given frame
