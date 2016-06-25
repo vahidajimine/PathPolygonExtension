@@ -20,24 +20,24 @@ extension UIBezierPath {
      
      - returns: the N-sided polygon
      */
-    convenience init (createRegularShapeWithRect: CGRect, withSides: UInt = 3, withRotation: CGFloat? = nil) {
+    convenience init (createRegularShape rect: CGRect, withSides sides: UInt = 3, withRotation rotation: CGFloat? = nil) {
         self.init()
         //Checks to see if withSides meets the preconditions
-        assert(withSides > 2, "withSides parameter must be greater than 3")
+        assert(sides > 2, "withSides parameter must be greater than 3")
         
         //Moves the point to initial point to draw
-        self.moveToPoint(CGPointMake(createRegularShapeWithRect.width/2 + createRegularShapeWithRect.midX, createRegularShapeWithRect.midY))
+        self.moveToPoint(CGPointMake(rect.width/2 + rect.midX, rect.midY))
         
         //Creates end point the shape and draws it to there
-        for i in 0..<withSides {
-            let theta = CGFloat(2 * M_PI / Double(withSides) * Double(i))
-            let x = createRegularShapeWithRect.midX + createRegularShapeWithRect.width/2 * cos(theta)
-            let y = createRegularShapeWithRect.midY + createRegularShapeWithRect.height/2 * sin(theta)
+        for i in 0..<sides {
+            let theta = CGFloat(2 * M_PI / Double(sides) * Double(i))
+            let x = rect.midX + rect.width/2 * cos(theta)
+            let y = rect.midY + rect.height/2 * sin(theta)
             self.addLineToPoint(CGPointMake(x, y))
         }
         
         //If the rotation needs to
-        self.transformPolygon(createRegularShapeWithRect, withRotation: withRotation)
+        self.transformPolygon(withRect: rect, withRotation: rotation)
         
         self.closePath()
     }
@@ -48,12 +48,12 @@ extension UIBezierPath {
      - parameter withRect:     the rect to rotate the polygon
      - parameter withRotation: the degrees in radians to rotate the polygon
      */
-    private func transformPolygon(withRect: CGRect, withRotation: CGFloat?){
+    private func transformPolygon(withRect rect: CGRect, withRotation rotation: CGFloat?){
         //The transform settings
-        if let rad = withRotation {
+        if let rad = rotation {
             let rotate = CGAffineTransformMakeRotation(rad)
-            let offset = CGAffineTransformMakeTranslation(-withRect.width / 2, -withRect.height/2)
-            let center = CGAffineTransformMakeTranslation(withRect.width/2, withRect.height/2)
+            let offset = CGAffineTransformMakeTranslation(-rect.width / 2, -rect.height/2)
+            let center = CGAffineTransformMakeTranslation(rect.width/2, rect.height/2)
         
             //First need to offset the polygon to (0,0)
             self.applyTransform(offset)
